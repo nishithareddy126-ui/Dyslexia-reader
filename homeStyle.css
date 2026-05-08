@@ -9,13 +9,14 @@ body {
   font-family: 'Open-Dyslexic', Arial, sans-serif;
 }
 
-textarea, #output {
+textarea,
+#output {
   font-family: inherit;
 }
 
 textarea {
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   font-size: 20px;
   padding: 15px;
 }
@@ -29,9 +30,6 @@ textarea {
 
 #output {
   font-family: 'Open-Dyslexic', Arial, sans-serif;
-  letter-spacing: 1.5px;
-  line-height: 2.2;
-  font-size: 24px;
   margin-top: 20px;
   border-radius: 12px;
   background: #fff;
@@ -44,11 +42,13 @@ textarea {
   width: 50px;
   height: 25px;
 }
+
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
+
 .slider {
   position: absolute;
   cursor: pointer;
@@ -60,6 +60,7 @@ textarea {
   bottom: 0;
   transition: 0.4s;
 }
+
 .slider::before {
   position: absolute;
   content: "";
@@ -71,15 +72,17 @@ textarea {
   border-radius: 50%;
   transition: 0.4s;
 }
-input:checked + .slider {
+
+input:checked+.slider {
   background-color: #4CAF50;
 }
-input:checked + .slider::before {
+
+input:checked+.slider::before {
   transform: translateX(24px);
 }
 
 /* Adaptive reading levels */
-.easy-mode {
+/* .easy-mode {
   font-size: 32px;
   line-height: 2.4;
   letter-spacing: 2px;
@@ -93,21 +96,253 @@ input:checked + .slider::before {
   font-size: 20px;
   line-height: 1.6;
   letter-spacing: 1px;
+} */
+#output.easy-mode {
+  font-size: 42px !important;
+  line-height: 3 !important;
+  letter-spacing: 4px !important;
+}
+
+#output.medium-mode {
+  font-size: 26px !important;
+  line-height: 2.2 !important;
+}
+
+#output.hard-mode {
+  font-size: 16px !important;
+  line-height: 1.3 !important;
 }
 
 /* Stronger highlight for easy mode */
 .easy-mode .highlight {
   background-color: #ffeb3b;
   font-weight: bold;
+  letter-spacing: 3px;
 }
 
 /* Normal highlight for medium */
 .medium-mode .highlight {
   background-color: #ffe082;
+  line-height: 2.2;
+
 }
 
 /* Subtle highlight for hard mode */
 .hard-mode .highlight {
   background-color: #fff59d;
   opacity: 0.8;
+  line-height: 1.4;
+}
+
+.changed {
+  background-color: #ffe066;
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+/* ============================================================
+   SETTINGS PANEL — safe additions only, no existing rules touched
+   ============================================================ */
+
+/* Gear button fixed top-right */
+#settings-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  line-height: 1;
+}
+
+#settings-btn:hover {
+  transform: rotate(30deg) scale(1.08);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.55);
+}
+
+/* Floating panel */
+#settings-panel {
+  position: fixed;
+  top: 68px;
+  right: 16px;
+  z-index: 9998;
+  width: 290px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(79, 70, 229, 0.18);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.16);
+  padding: 20px 22px 22px;
+  display: none;           /* hidden by default */
+  flex-direction: column;
+  gap: 18px;
+  transform-origin: top right;
+  animation: settingsFadeIn 0.2s ease forwards;
+}
+
+#settings-panel.open {
+  display: flex;
+}
+
+@keyframes settingsFadeIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Panel header */
+#settings-panel .sp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(79, 70, 229, 0.12);
+}
+
+#settings-panel .sp-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: #3730a3;
+  letter-spacing: 0.3px;
+}
+
+#settings-panel .sp-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #6b7280;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+#settings-panel .sp-close:hover {
+  background: #f3f4f6;
+}
+
+/* Each control row */
+#settings-panel .sp-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#settings-panel .sp-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #374151;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#settings-panel .sp-label span.sp-val {
+  font-weight: 400;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+/* Sliders */
+#settings-panel input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #4f46e5 0%, #e5e7eb 0%);
+  outline: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+#settings-panel input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #4f46e5;
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.45);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+#settings-panel input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+/* Color picker row */
+#settings-panel .sp-color-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#settings-panel input[type="color"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 2px;
+  background: none;
+  transition: border-color 0.15s;
+}
+
+#settings-panel input[type="color"]:hover {
+  border-color: #4f46e5;
+}
+
+#settings-panel .sp-color-presets {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#settings-panel .sp-preset {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+#settings-panel .sp-preset:hover {
+  border-color: #4f46e5;
+  transform: scale(1.1);
+}
+
+/* Reset button */
+#settings-panel .sp-reset {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 7px 0;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  width: 100%;
+}
+
+#settings-panel .sp-reset:hover {
+  background: #e5e7eb;
 }
